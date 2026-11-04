@@ -43,8 +43,16 @@ func _draw() -> void:
 	var c_soil_dark: Color = palette.get("ground_soil_dark", Color(0.12, 0.15, 0.20, 1.0))
 	var c_sub_ice: Color = c_snow_base.lerp(c_soil_dark, 0.45)
 
-	# 1. Deep Substratum Permafrost / Tundra Bed (Y: 580 to 720)
-	var soil_rect := Rect2(view_left, 580.0, view_right - view_left, SCREEN_BOTTOM_Y - 580.0)
+	# 1. Deep Substratum Permafrost / Tundra Bed (Y: 580 до низа экрана)
+	# Низ берём по фактической высоте вьюпорта: при окне выше 720 px
+	# (stretch aspect=expand) прежняя константа оставляла полосу фона снизу.
+	var soil_rect: Rect2
+	var bottom_y: float = SCREEN_BOTTOM_Y
+	if get_viewport() != null:
+		var xf: Transform2D = get_global_transform_with_canvas()
+		var inv: Transform2D = xf.affine_inverse()
+		bottom_y = (inv * Vector2(0.0, get_viewport_rect().size.y)).y
+	soil_rect = Rect2(view_left, 580.0, view_right - view_left, maxf(bottom_y, 720.0) - 580.0)
 	draw_rect(soil_rect, c_soil_dark)
 
 	# 2. Compacted Sub-Snow Ice Layer (Y: 566 to 580)

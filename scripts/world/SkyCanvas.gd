@@ -2,9 +2,6 @@
 class_name SkyCanvas
 extends Node2D
 
-## Совпадает с motion_scale этого ParallaxLayer в World.tscn.
-const MOTION_SCALE: float = 0.02
-
 ## Procedural sky dome, twinkling star field & flowing Aurora Borealis curtains.
 ## Motion scale: (0.02, 0.0).
 
@@ -26,28 +23,29 @@ func _process(delta: float) -> void:
 		redraw_accum = 0.0
 		queue_redraw()
 
-## Полуширина отрисовки в координатах слоя.
-## Компенсацию параллакса делает сам ParallaxLayer, поэтому рисовать нужно
-## вокруг локального нуля, а ширину брать с запасом на сдвиг -cam.x * MOTION_SCALE.
-func _vis_half_span() -> float:
-	var half: float = 640.0 # запасной минимум, если вьюпорта ещё нет
+## Видимая область в ЛОКАЛЬНЫХ координатах этого узла.
+## Никакой арифметики с motion_scale: берём фактическую трансформацию узла
+## (её уже выставил ParallaxLayer) и переводим углы экрана в локальные
+## координаты. Пусть Godot сам решает, куда сдвинулся слой — сколько бы
+## раз мы ни ошибались в формуле, здесь ошибки быть не может.
+func _visible_local_rect() -> Rect2:
+	var size: Vector2 = Vector2(1280.0, 720.0)
 	if get_viewport() != null:
-		half = get_viewport_rect().size.x * 0.5
-		var cam: Camera2D = get_viewport().get_camera_2d()
-		if cam != null:
-			half *= cam.zoom.x
-	# ParallaxLayer сдвигает содержимое на -cam.x * MOTION_SCALE, поэтому
-	# слабопараллаксный слой уезжает почти настолько же, насколько сдвинут
-	# сам экран: ему нужна почти полная полуширина плюс запас на зум.
-	# Раньше стояло span = half * 1.5 без учёта слоя — для Sky при cam.x = 640
-	# правый край приходился ровно на x = 1066, и дальше был чистый фон.
-	return half * (1.0 + MOTION_SCALE) + 80.0
+		size = get_viewport_rect().size
+	var xf: Transform2D = get_global_transform_with_canvas()
+	var inv: Transform2D = xf.affine_inverse()
+	var a: Vector2 = inv * Vector2.ZERO
+	var b: Vector2 = inv * size
+	var pad: float = 64.0 # запас на дрожание камеры и сглаживание
+	return Rect2(Vector2(minf(a.x, b.x) - pad, minf(a.y, b.y) - pad),
+		Vector2(absf(b.x - a.x) + pad * 2.0, absf(b.y - a.y) + pad * 2.0))
+
 
 func _draw() -> void:
 	# Никакого cam.x здесь: ParallaxLayer уже сдвигает содержимое сам.
-	var half_span: float = _vis_half_span()
-	var left_x: float = -half_span
-	var right_x: float = half_span
+	var vis: Rect2 = _visible_local_rect()
+	var left_x: float = vis.position.x
+	var right_x: float = vis.end.x
 
 	var pal: Dictionary = biome_mgr.get_active_palette() if biome_mgr != null else {}
 	var c_zenith: Color = pal.get("sky_zenith", Color(0.20, 0.32, 0.44))
