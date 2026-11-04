@@ -14,27 +14,27 @@ extends CanvasLayer
 @onready var fuel_bar: ProgressBar = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/FuelContainer/FuelBar")
 
 # Indicator 2: Металлолом
-@onready var scrap_label: Label = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/ResHBox/ScrapLabel")
+@onready var scrap_label: Label = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/ResHBox/ScrapLabel")
 
 # Indicator 3: Припасы
-@onready var supplies_label: Label = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/ResHBox/SuppliesLabel")
+@onready var supplies_label: Label = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/ResHBox/SuppliesLabel")
 
 # Indicator 4: Прочность опор
 @onready var legs_label: Label = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/LegsContainer/LegsLabel")
 @onready var legs_bar: ProgressBar = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/LegsContainer/LegsBar")
 
 # Indicator 5: Температура в доме
-@onready var cabin_temp_label: Label = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/CabinTempLabel")
+@onready var cabin_temp_label: Label = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/CabinTempLabel")
 
 # Indicator 6: Здоровье
-@onready var health_label: Label = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/HealthContainer/HealthLabel")
-@onready var health_bar: ProgressBar = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/HealthBar")
+@onready var health_label: Label = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/HealthContainer/HealthLabel")
+@onready var health_bar: ProgressBar = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/HealthBar")
 
 # Indicator 7: Пройдено (м)
-@onready var distance_traveled_label: Label = get_node_or_null("RootControl/TopMargin/MainHBox/NavPanel/VBox/DistTraveledLabel")
+@onready var distance_traveled_label: Label = get_node_or_null("RootControl/SideMargin/SideVBox/NavPanel/VBox/DistTraveledLabel")
 
 # Indicator 8: До станции (м)
-@onready var distance_remaining_label: Label = get_node_or_null("RootControl/TopMargin/MainHBox/NavPanel/VBox/DistRemainingLabel")
+@onready var distance_remaining_label: Label = get_node_or_null("RootControl/SideMargin/SideVBox/NavPanel/VBox/DistRemainingLabel")
 
 # Indicator 9: Печь (ВКЛ/ВЫКЛ)
 @onready var stove_label: Label = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/StoveContainer/StoveLabel")
@@ -45,7 +45,7 @@ extends CanvasLayer
 @onready var upgrades_button: Button = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/MaintenanceHBox/UpgradesButton")
 
 # Indicator 10: Погода
-@onready var weather_label: Label = get_node_or_null("RootControl/TopMargin/MainHBox/NavPanel/VBox/WeatherLabel")
+@onready var weather_label: Label = get_node_or_null("RootControl/SideMargin/SideVBox/NavPanel/VBox/WeatherLabel")
 
 # Supplementary UI Elements
 @onready var alert_banner: PanelContainer = get_node_or_null("RootControl/AlertBanner")
@@ -91,33 +91,33 @@ func _resolve_node_references() -> void:
 	if fuel_bar == null:
 		fuel_bar = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/FuelContainer/FuelBar")
 	if scrap_label == null:
-		scrap_label = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/ResHBox/ScrapLabel")
+		scrap_label = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/ResHBox/ScrapLabel")
 		if scrap_label == null:
-			scrap_label = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/ScrapLabel")
+			scrap_label = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/ScrapLabel")
 	if supplies_label == null:
-		supplies_label = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/ResHBox/SuppliesLabel")
+		supplies_label = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/ResHBox/SuppliesLabel")
 		if supplies_label == null:
-			supplies_label = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/SuppliesLabel")
+			supplies_label = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/SuppliesLabel")
 	if legs_label == null:
 		legs_label = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/LegsContainer/LegsLabel")
 	if legs_bar == null:
 		legs_bar = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/LegsContainer/LegsBar")
 	if cabin_temp_label == null:
-		cabin_temp_label = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/CabinTempLabel")
+		cabin_temp_label = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/CabinTempLabel")
 	if health_label == null:
-		health_label = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/HealthContainer/HealthLabel")
+		health_label = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/HealthContainer/HealthLabel")
 	if health_bar == null:
-		health_bar = get_node_or_null("RootControl/TopMargin/MainHBox/CrewPanel/VBox/HealthBar")
+		health_bar = get_node_or_null("RootControl/SideMargin/SideVBox/CrewPanel/VBox/HealthBar")
 	if distance_traveled_label == null:
-		distance_traveled_label = get_node_or_null("RootControl/TopMargin/MainHBox/NavPanel/VBox/DistTraveledLabel")
+		distance_traveled_label = get_node_or_null("RootControl/SideMargin/SideVBox/NavPanel/VBox/DistTraveledLabel")
 	if distance_remaining_label == null:
-		distance_remaining_label = get_node_or_null("RootControl/TopMargin/MainHBox/NavPanel/VBox/DistRemainingLabel")
+		distance_remaining_label = get_node_or_null("RootControl/SideMargin/SideVBox/NavPanel/VBox/DistRemainingLabel")
 	if stove_label == null:
 		stove_label = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/StoveContainer/StoveLabel")
 	if stove_button == null:
 		stove_button = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/StoveContainer/StoveButton")
 	if weather_label == null:
-		weather_label = get_node_or_null("RootControl/TopMargin/MainHBox/NavPanel/VBox/WeatherLabel")
+		weather_label = get_node_or_null("RootControl/SideMargin/SideVBox/NavPanel/VBox/WeatherLabel")
 	if alert_banner == null:
 		alert_banner = get_node_or_null("RootControl/AlertBanner")
 	if alert_label == null:
@@ -184,12 +184,68 @@ func _create_bar_fill_stylebox(fill_color: Color) -> StyleBoxFlat:
 	sb.corner_radius_bottom_left = 4
 	return sb
 
+func _create_button_stylebox(bg: Color, border: Color) -> StyleBoxFlat:
+	var sb: StyleBoxFlat = StyleBoxFlat.new()
+	sb.bg_color = bg
+	sb.border_width_left = 1
+	sb.border_width_top = 1
+	sb.border_width_right = 1
+	sb.border_width_bottom = 1
+	sb.border_color = border
+	sb.corner_radius_top_left = 4
+	sb.corner_radius_top_right = 4
+	sb.corner_radius_bottom_right = 4
+	sb.corner_radius_bottom_left = 4
+	sb.content_margin_left = 10.0
+	sb.content_margin_right = 10.0
+	sb.content_margin_top = 5.0
+	sb.content_margin_bottom = 5.0
+	return sb
+
+func _style_button(btn: Button) -> void:
+	if btn == null:
+		return
+	btn.add_theme_stylebox_override("normal", _create_button_stylebox(
+		Color(0.11, 0.16, 0.22, 0.95), Color(0.28, 0.44, 0.60, 0.85)))
+	btn.add_theme_stylebox_override("hover", _create_button_stylebox(
+		Color(0.16, 0.24, 0.33, 1.0), Color(0.40, 0.62, 0.85, 1.0)))
+	btn.add_theme_stylebox_override("pressed", _create_button_stylebox(
+		Color(0.09, 0.13, 0.18, 1.0), Color(0.30, 0.48, 0.66, 1.0)))
+	btn.add_theme_stylebox_override("disabled", _create_button_stylebox(
+		Color(0.09, 0.11, 0.14, 0.70), Color(0.20, 0.24, 0.30, 0.60)))
+	btn.add_theme_color_override("font_color", Color(0.86, 0.92, 1.0))
+	btn.add_theme_color_override("font_hover_color", Color(1.0, 1.0, 1.0))
+	btn.add_theme_color_override("font_disabled_color", Color(0.45, 0.50, 0.56))
+	btn.add_theme_font_size_override("font_size", 13)
+
+func _style_bar(bar: ProgressBar) -> void:
+	if bar == null:
+		return
+	# Без подложки незаполненная часть бара сливается с панелью и «плавает».
+	var bg: StyleBoxFlat = StyleBoxFlat.new()
+	bg.bg_color = Color(0.03, 0.05, 0.08, 0.85)
+	bg.corner_radius_top_left = 4
+	bg.corner_radius_top_right = 4
+	bg.corner_radius_bottom_right = 4
+	bg.corner_radius_bottom_left = 4
+	bar.add_theme_stylebox_override("background", bg)
+
 func _apply_dark_frosted_theme() -> void:
 	var frosted_box = _create_dark_frosted_stylebox()
-	for panel_name in ["HousePanel", "NavPanel", "CrewPanel"]:
-		var p: PanelContainer = get_node_or_null("RootControl/TopMargin/MainHBox/" + panel_name)
+	var panel_paths: Array[String] = [
+		"RootControl/TopMargin/MainHBox/HousePanel",
+		"RootControl/SideMargin/SideVBox/NavPanel",
+		"RootControl/SideMargin/SideVBox/CrewPanel",
+	]
+	for panel_path in panel_paths:
+		var p: PanelContainer = get_node_or_null(panel_path)
 		if p != null:
 			p.add_theme_stylebox_override("panel", frosted_box)
+
+	for btn in [repair_button, upgrades_button, stove_button]:
+		_style_button(btn)
+	for bar in [fuel_bar, legs_bar, health_bar]:
+		_style_bar(bar)
 			
 	if alert_banner != null:
 		var alert_box: StyleBoxFlat = _create_dark_frosted_stylebox(0.92)
@@ -212,18 +268,33 @@ func _build_procedural_ui() -> void:
 	root_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root_control)
 	
+	# Левая колонка: механика дома. Фиксированная ширина, чтобы длинные
+	# значения ("Топливо: 91.5 / 100.0 л") не распирали панель на пол-экрана.
 	var top_margin: MarginContainer = MarginContainer.new()
 	top_margin.name = "TopMargin"
-	top_margin.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	top_margin.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	top_margin.size = Vector2(640.0, 208.0)
 	top_margin.add_theme_constant_override("margin_left", 16)
 	top_margin.add_theme_constant_override("margin_top", 12)
-	top_margin.add_theme_constant_override("margin_right", 16)
 	root_control.add_child(top_margin)
-	
+
 	var main_hbox: HBoxContainer = HBoxContainer.new()
 	main_hbox.name = "MainHBox"
 	main_hbox.add_theme_constant_override("separation", 16)
 	top_margin.add_child(main_hbox)
+
+	# Правая колонка: навигация и экипаж, прижата к правому краю.
+	var side_margin: MarginContainer = MarginContainer.new()
+	side_margin.name = "SideMargin"
+	side_margin.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	side_margin.size = Vector2(340.0, 208.0)
+	side_margin.add_theme_constant_override("margin_right", 16)
+	root_control.add_child(side_margin)
+
+	var side_vbox: VBoxContainer = VBoxContainer.new()
+	side_vbox.name = "SideVBox"
+	side_vbox.add_theme_constant_override("separation", 10)
+	side_margin.add_child(side_vbox)
 	
 	# 1. House Panel (Шасси и двигатель)
 	var house_panel: PanelContainer = PanelContainer.new()
@@ -305,7 +376,7 @@ func _build_procedural_ui() -> void:
 	var nav_panel: PanelContainer = PanelContainer.new()
 	nav_panel.name = "NavPanel"
 	nav_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	main_hbox.add_child(nav_panel)
+	side_vbox.add_child(nav_panel)
 	
 	var nav_vbox: VBoxContainer = VBoxContainer.new()
 	nav_vbox.name = "VBox"
@@ -335,7 +406,7 @@ func _build_procedural_ui() -> void:
 	var crew_panel: PanelContainer = PanelContainer.new()
 	crew_panel.name = "CrewPanel"
 	crew_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	main_hbox.add_child(crew_panel)
+	side_vbox.add_child(crew_panel)
 	
 	var crew_vbox: VBoxContainer = VBoxContainer.new()
 	crew_vbox.name = "VBox"
@@ -360,7 +431,7 @@ func _build_procedural_ui() -> void:
 	health_bar.value = 100.0
 	health_bar.custom_minimum_size = Vector2(0, 14)
 	health_bar.show_percentage = false
-	health_bar.add_theme_stylebox_override("fill", _create_bar_fill_stylebox(Color(0.85, 0.20, 0.25, 0.9)))
+	health_bar.add_theme_stylebox_override("fill", _create_bar_fill_stylebox(Color(0.30, 0.85, 0.45, 0.95)))
 	crew_vbox.add_child(health_bar)
 	
 	cabin_temp_label = Label.new()
@@ -561,6 +632,16 @@ func _on_player_health_changed(hp: float, max_hp: float) -> void:
 	if health_bar != null:
 		health_bar.max_value = max_hp
 		health_bar.value = hp
+		# Красная полоса на полном HP читается как «критично». Цвет по уровню.
+		var frac: float = hp / max_hp if max_hp > 0.0 else 0.0
+		var fill_col: Color
+		if frac > 0.6:
+			fill_col = Color(0.30, 0.85, 0.45, 0.95)
+		elif frac > 0.3:
+			fill_col = Color(0.95, 0.75, 0.20, 0.95)
+		else:
+			fill_col = Color(0.88, 0.24, 0.26, 0.95)
+		health_bar.add_theme_stylebox_override("fill", _create_bar_fill_stylebox(fill_col))
 	if health_label != null:
 		health_label.text = "Здоровье: %d / %d HP" % [int(hp), int(max_hp)]
 		if hp < 25.0:

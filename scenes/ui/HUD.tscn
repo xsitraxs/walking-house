@@ -54,8 +54,9 @@ mouse_filter = 2
 [node name="TopMargin" type="MarginContainer" parent="RootControl"]
 layout_mode = 1
 anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 130.0
+anchor_right = 0.0
+offset_right = 640.0
+offset_bottom = 208.0
 grow_horizontal = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 12
@@ -66,6 +67,7 @@ layout_mode = 2
 theme_override_constants/separation = 16
 
 [node name="HousePanel" type="PanelContainer" parent="RootControl/TopMargin/MainHBox"]
+custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_frosted")
@@ -132,73 +134,91 @@ text = "Печь: ВЫКЛ"
 layout_mode = 2
 text = "[F] Печь"
 
-[node name="NavPanel" type="PanelContainer" parent="RootControl/TopMargin/MainHBox"]
+[node name="SideMargin" type="MarginContainer" parent="RootControl"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -340.0
+offset_top = 12.0
+offset_bottom = 208.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 0
+
+[node name="SideVBox" type="VBoxContainer" parent="RootControl/SideMargin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NavPanel" type="PanelContainer" parent="RootControl/SideMargin/SideVBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_frosted")
 
-[node name="VBox" type="VBoxContainer" parent="RootControl/TopMargin/MainHBox/NavPanel"]
+[node name="VBox" type="VBoxContainer" parent="RootControl/SideMargin/SideVBox/NavPanel"]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Title" type="Label" parent="RootControl/TopMargin/MainHBox/NavPanel/VBox"]
+[node name="Title" type="Label" parent="RootControl/SideMargin/SideVBox/NavPanel/VBox"]
 modulate = Color(0.75, 0.85, 0.95, 1)
 layout_mode = 2
 text = "🧭 НАВИГАЦИЯ И ПОГОДА"
 
-[node name="DistTraveledLabel" type="Label" parent="RootControl/TopMargin/MainHBox/NavPanel/VBox"]
+[node name="DistTraveledLabel" type="Label" parent="RootControl/SideMargin/SideVBox/NavPanel/VBox"]
 layout_mode = 2
 text = "Пройдено: 0.0 м"
 
-[node name="DistRemainingLabel" type="Label" parent="RootControl/TopMargin/MainHBox/NavPanel/VBox"]
+[node name="DistRemainingLabel" type="Label" parent="RootControl/SideMargin/SideVBox/NavPanel/VBox"]
 layout_mode = 2
 text = "До станции: 5000.0 м"
 
-[node name="WeatherLabel" type="Label" parent="RootControl/TopMargin/MainHBox/NavPanel/VBox"]
+[node name="WeatherLabel" type="Label" parent="RootControl/SideMargin/SideVBox/NavPanel/VBox"]
 layout_mode = 2
 text = "Погода: Ясно (-15.0°C)"
 
-[node name="CrewPanel" type="PanelContainer" parent="RootControl/TopMargin/MainHBox"]
+[node name="CrewPanel" type="PanelContainer" parent="RootControl/SideMargin/SideVBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_frosted")
 
-[node name="VBox" type="VBoxContainer" parent="RootControl/TopMargin/MainHBox/CrewPanel"]
+[node name="VBox" type="VBoxContainer" parent="RootControl/SideMargin/SideVBox/CrewPanel"]
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="Title" type="Label" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox"]
+[node name="Title" type="Label" parent="RootControl/SideMargin/SideVBox/CrewPanel/VBox"]
 modulate = Color(0.75, 0.85, 0.95, 1)
 layout_mode = 2
 text = "👤 ЭКИПАЖ И РЕСУРСЫ"
 
-[node name="HealthContainer" type="VBoxContainer" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox"]
+[node name="HealthContainer" type="VBoxContainer" parent="RootControl/SideMargin/SideVBox/CrewPanel/VBox"]
 layout_mode = 2
 
-[node name="HealthLabel" type="Label" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox/HealthContainer"]
+[node name="HealthLabel" type="Label" parent="RootControl/SideMargin/SideVBox/CrewPanel/VBox/HealthContainer"]
 layout_mode = 2
 text = "Здоровье: 100 / 100 HP"
 
-[node name="HealthBar" type="ProgressBar" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox"]
+[node name="HealthBar" type="ProgressBar" parent="RootControl/SideMargin/SideVBox/CrewPanel/VBox"]
 custom_minimum_size = Vector2(0, 14)
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_health")
 value = 100.0
 show_percentage = false
 
-[node name="CabinTempLabel" type="Label" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox"]
+[node name="CabinTempLabel" type="Label" parent="RootControl/SideMargin/SideVBox/CrewPanel/VBox"]
 layout_mode = 2
 text = "Температура в доме: +18.0°C"
 
-[node name="ResHBox" type="HBoxContainer" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox"]
+[node name="ResHBox" type="HBoxContainer" parent="RootControl/SideMargin/SideVBox/CrewPanel/VBox"]
 layout_mode = 2
 
-[node name="ScrapLabel" type="Label" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox/ResHBox"]
+[node name="ScrapLabel" type="Label" parent="RootControl/SideMargin/SideVBox/CrewPanel/VBox/ResHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Металлолом: 0 шт."
 
-[node name="SuppliesLabel" type="Label" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox/ResHBox"]
+[node name="SuppliesLabel" type="Label" parent="RootControl/SideMargin/SideVBox/CrewPanel/VBox/ResHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Припасы: 5 шт."
@@ -210,9 +230,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -250.0
-offset_top = 160.0
+offset_top = 220.0
 offset_right = 250.0
-offset_bottom = 205.0
+offset_bottom = 265.0
 grow_horizontal = 2
 
 [node name="AlertLabel" type="Label" parent="RootControl/AlertBanner"]

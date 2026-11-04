@@ -2,6 +2,11 @@
 class_name MidgroundCanvas
 extends Node2D
 
+## Полуширина окна отрисовки в экранных координатах. Слой, который уже
+## скомпенсирован по cam.x, всё равно должен покрывать весь вьюпорт
+## (1280 px) с запасом, иначе справа/слева проступает clear color окна.
+const PARALLAX_SPAN: float = 1400.0
+
 ## Procedural midground rolling hills and biome-specific visual storytelling props.
 ## Renders ruined tents, weathered posts, scrap cranes, dead pines, and outpost towers.
 ## Motion scale: (0.25, 0.0).
@@ -22,8 +27,8 @@ func _draw() -> void:
 		cam = get_viewport().get_camera_2d()
 	var cx: float = cam.global_position.x if cam != null else 0.0
 	var local_cam_x: float = cx * 0.25
-	var left_x: float = local_cam_x - 750.0
-	var right_x: float = local_cam_x + 750.0
+	var left_x: float = local_cam_x - PARALLAX_SPAN
+	var right_x: float = local_cam_x + PARALLAX_SPAN
 
 	var pal: Dictionary = biome_mgr.get_active_palette() if biome_mgr != null else {}
 	var c_mid: Color = pal.get("midground_tint", Color(0.50, 0.60, 0.72))
