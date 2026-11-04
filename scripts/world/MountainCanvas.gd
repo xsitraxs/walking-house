@@ -2,6 +2,9 @@
 class_name MountainCanvas
 extends Node2D
 
+## Совпадает с motion_scale этого ParallaxLayer в World.tscn.
+const MOTION_SCALE: float = 0.08
+
 ## Procedural distant alpine crags, jagged peaks & atmospheric depth.
 ## Motion scale: (0.08, 0.0).
 
@@ -13,10 +16,9 @@ func _ready() -> void:
 	if biome_mgr != null:
 		biome_mgr.ambient_palette_updated.connect(func(_p): queue_redraw())
 
-## Полуширина отрисовки в координатах слоя. Считается от реального размера
-## вьюпорта с учётом зума, а не от константы: окно бывает шире 1280 px, а зум
-## меняется между режимами дома (1.0) и игрока (1.15). Прежние фиксированные
-## +-750 px не покрывали широкое окно, и справа проступал незакрашенный фон.
+## Полуширина отрисовки в координатах слоя.
+## Компенсацию параллакса делает сам ParallaxLayer, поэтому рисовать нужно
+## вокруг локального нуля, а ширину брать с запасом на сдвиг -cam.x * MOTION_SCALE.
 func _vis_half_span() -> float:
 	var half: float = 640.0 # запасной минимум, если вьюпорта ещё нет
 	if get_viewport() != null:
@@ -24,18 +26,18 @@ func _vis_half_span() -> float:
 		var cam: Camera2D = get_viewport().get_camera_2d()
 		if cam != null:
 			half *= cam.zoom.x
-	# Полтора экрана в каждую сторону — с запасом на сдвиг слоя.
-	return half * 1.5 + 80.0
+	# ParallaxLayer сдвигает содержимое на -cam.x * MOTION_SCALE, поэтому
+	# слабопараллаксный слой уезжает почти настолько же, насколько сдвинут
+	# сам экран: ему нужна почти полная полуширина плюс запас на зум.
+	# Раньше стояло span = half * 1.5 без учёта слоя — для Sky при cam.x = 640
+	# правый край приходился ровно на x = 1066, и дальше был чистый фон.
+	return half * (1.0 + MOTION_SCALE) + 80.0
 
 func _draw() -> void:
-	var cam: Camera2D = null
-	if get_viewport() != null:
-		cam = get_viewport().get_camera_2d()
-	var cx: float = cam.global_position.x if cam != null else 0.0
-	var local_cam_x: float = cx * 0.08
+	# Никакого cam.x здесь: ParallaxLayer уже сдвигает содержимое сам.
 	var half_span: float = _vis_half_span()
-	var left_x: float = local_cam_x - half_span
-	var right_x: float = local_cam_x + half_span
+	var left_x: float = -half_span
+	var right_x: float = half_span
 
 	var pal: Dictionary = biome_mgr.get_active_palette() if biome_mgr != null else {}
 	var c_mount: Color = pal.get("mountain_tint", Color(0.35, 0.45, 0.58, 0.85))
