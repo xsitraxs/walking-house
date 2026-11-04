@@ -133,11 +133,26 @@ func _resolve_node_references() -> void:
 	if upgrades_button == null:
 		upgrades_button = get_node_or_null("RootControl/TopMargin/MainHBox/HousePanel/VBox/MaintenanceHBox/UpgradesButton")
 
+func _is_modal_open() -> bool:
+	if not is_inside_tree():
+		return false
+	var root_node = get_tree().root
+	for modal_name in ["UpgradePanel", "PauseMenu", "EndScreen", "SettingsDialog", "TutorialDialog"]:
+		var node = root_node.find_child(modal_name, true, false)
+		if node != null and node is CanvasItem and node.visible:
+			return true
+	return false
+
 func _input(event: InputEvent) -> void:
+	if _is_modal_open():
+		return
 	if event.is_action_pressed("toggle_stove"):
 		_on_stove_button_pressed()
-	elif event is InputEventKey and event.pressed and not event.echo and event.physical_keycode == KEY_R:
-		_on_repair_button_pressed()
+	elif event is InputEventKey and event.pressed and not event.echo:
+		if event.physical_keycode == KEY_R:
+			_on_repair_button_pressed()
+		elif event.physical_keycode == KEY_H:
+			_on_heal_button_pressed()
 
 # ==============================================================================
 # THEME: DARK FROSTED GLASS (StyleBoxFlat)
@@ -399,7 +414,7 @@ func _build_procedural_ui() -> void:
 	controls_hint_label = Label.new()
 	controls_hint_label.name = "ControlsHint"
 	controls_hint_label.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	controls_hint_label.text = "[A/D] Движение | [E] Выход/Вход | [F] Печь | [U] Улучшения | [Esc] Меню"
+	controls_hint_label.text = "[A/D] Движение | [E] Выход/Вход | [F] Печь | [R] Ремонт | [H] Лечение | [U] Верстак | [Esc] Меню"
 	controls_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	controls_hint_label.position = Vector2(0, 690)
 	controls_hint_label.modulate = Color(0.7, 0.7, 0.7, 0.8)
@@ -615,6 +630,24 @@ func _on_repair_button_pressed() -> void:
 			else:
 				show_alert("Недостаточно металлолома для ремонта (нужен 1 лом)!", 2.0)
 
+func _on_heal_button_pressed() -> void:
+	var gs: Node = _get_game_state()
+	var sm: Node = _get_sound_manager()
+	if gs == null:
+		return
+	if gs.supplies < 1.0:
+		if sm != null and sm.has_method("play_sfx"):
+			sm.play_sfx("error")
+		show_alert("НЕТ ПРИПАСОВ ДЛЯ ЛЕЧЕНИЯ!", 2.0)
+		return
+	if gs.player_health >= gs.max_player_health:
+		show_alert("Здоровье уже на максимуме (100 HP)!", 2.0)
+		return
+	if gs.consume_supply_for_heal():
+		if sm != null and sm.has_method("play_sfx"):
+			sm.play_sfx("craft")
+		show_alert("ПРИПАСЫ ИСПОЛЬЗОВАНЫ (+25 HP)", 2.0)
+
 func _on_upgrades_button_pressed() -> void:
 	var gs: Node = _get_game_state()
 	if gs != null and gs.is_player_outside:
@@ -664,9 +697,13 @@ func show_alert(text: String, duration_sec: float = 3.0) -> void:
 	if alert_banner != null and alert_label != null:
 		alert_label.text = text
 		alert_banner.visible = true
-		if is_inside_tree():
-			var t = get_tree().create_timer(duration_sec)
-			t.timeout.connect(func(): if alert_banner != null: alert_banner.visible = false)
+		if is_inside_tree() and get_tree() != null:
+			var t: SceneTreeTimer = get_tree().create_timer(duration_sec)
+			t.timeout.connect(Callable(self, "_hide_alert_banner"))
+
+func _hide_alert_banner() -> void:
+	if alert_banner != null:
+		alert_banner.visible = false
 
 func _on_prompt_requested(text: String) -> void:
 	if prompt_container != null and prompt_label != null:

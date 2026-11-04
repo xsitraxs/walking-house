@@ -45,9 +45,9 @@
 | 30 | Брошенная техника (Abandoned Machinery) | Остатки снегоходов, тягачей и генераторов | M3 | spec_miner F30 |
 | 31 | Остатки лагеря (Camp Remnants) | Брошенные палатки, бочки и кострища исследователей | M3 | spec_miner F31 |
 | 32 | Ремонт ног за металлолом (Leg Repair Station) | Расходование металлолома для восстановления опор дома | M1, M4 | spec_miner F32 |
-| 33 | Улучшение: Утепление (Insulation Upgrade) | Снижение скорости естественного остывания кабины дома на 35% | M1, M4 | spec_miner F33 |
-| 34 | Улучшение: Экономичный двигатель (Efficient Engine) | Снижение расхода топлива двигателем при ходьбе на 25% | M1, M4 | spec_miner F34 |
-| 35 | Улучшение: Усиленные ноги (Reinforced Legs) | Замедление механического износа ног при перемещении на 30% | M1, M4 | spec_miner F35 |
+| 33 | Улучшение: Утепление (Insulation Upgrade) | Снижение скорости естественного остывания кабины дома на 45% | M1, M4 | spec_miner F33 |
+| 34 | Улучшение: Экономичный двигатель (Efficient Engine) | Снижение расхода топлива двигателем при ходьбе на 30% | M1, M4 | spec_miner F34 |
+| 35 | Улучшение: Усиленные ноги (Reinforced Legs) | Замедление механического износа ног на 40% и прирост скорости на +15% | M1, M4 | spec_miner F35 |
 | 36 | Интерфейс улучшений (Upgrade UI) | Панель в кабине: список улучшений, цена, эффект, статус покупки | M4, M5 | spec_miner F36 |
 | 37 | Детерминированный баланс маршрута (Deterministic Route) | Расчетное размещение ресурсов гарантирует прохождение без RNG | M1, M3 | spec_miner F37 |
 | 38 | Внутренняя температура кабины (Cabin Temperature) | Термодинамическая модель температуры воздуха внутри дома | M1, M4 | spec_miner F38 |
@@ -74,10 +74,10 @@
 |---|------|-------|-------------|--------|
 | M1 | M1_CORE_SIMULATION_PROJECT | Project config (`project.godot`), input mapping, Autoloads (`GameState.gd`, `EventBus.gd`, `SoundManager.gd`), pure models (`SimulationLogic.gd`, `BalanceConfig.gd`), and initial headless verification test runner | none | DONE |
 | M2 | M2_WALKING_HOUSE_LOCOMOTION | WalkingHouse entity (`WalkingHouse.tscn`), procedural vector drawing, hydraulic articulated legs, hull sway, snow particle footfalls, foot tracks, movement controls, fuel/durability consumption, speed degradation curve, critical stop, and core HUD gauges | M1 | DONE |
-| M3 | M3_PLAYER_EXPLORATION_WORLD | World layout (5 biomes, 5000 m route, deterministic POIs), 4-layer parallax background, Player entity (`Player.tscn`), embark/disembark cycle, outside movement, interactable detection, context prompts, resource collection (fuel, scrap, supplies), safe tether radius, outside freezing damage | M1, M2 | PLANNED |
-| M4 | M4_THERMODYNAMICS_WEATHER_UPGRADES_SURVIVAL | Stove toggle and fuel burn, cabin cooling thermodynamics, inside freezing damage & warming recovery, Day/Night cycle, dynamic Blizzard event with advance warning, Leg repair station, Upgrade system (Insulation, Efficient Engine, Reinforced Legs), and Deadlock Detection Engine (zero false positives) | M1, M2, M3 | PLANNED |
-| M5 | M5_UI_AUDIO_GAMEPLAY_LOOP | Complete UI flow (MainMenu, PauseMenu, GameOver, Victory, TutorialOverlay, Settings with volume sliders), procedural PCM audio synthesis for all SFX and ambient loops, GameState clean reset on restart, 100% Russian localization review | M1, M2, M3, M4 | PLANNED |
-| M6 | M6_FINAL_E2E_VERIFICATION_HARDENING | Phase 1: Pass 100% of E2E test suite published in TEST_READY.md. Phase 2: Adversarial coverage hardening with Challenger (Tier 5), README documentation, and final readiness audit | M1, M2, M3, M4, M5, E2E_TESTING_TRACK | PLANNED |
+| M3 | M3_PLAYER_EXPLORATION_WORLD | World layout (5 biomes, 5000 m route, deterministic POIs), 4-layer parallax background, Player entity (`Player.tscn`), embark/disembark cycle, outside movement, interactable detection, context prompts, resource collection (fuel, scrap, supplies), safe tether radius, outside freezing damage | M1, M2 | DONE |
+| M4 | M4_THERMODYNAMICS_WEATHER_UPGRADES_SURVIVAL | Stove toggle and fuel burn, cabin cooling thermodynamics, inside freezing damage & warming recovery, Day/Night cycle, dynamic Blizzard event with advance warning, Leg repair station, Upgrade system (Insulation, Efficient Engine, Reinforced Legs), and Deadlock Detection Engine (zero false positives) | M1, M2, M3 | DONE |
+| M5 | M5_UI_AUDIO_GAMEPLAY_LOOP | Complete UI flow (MainMenu, PauseMenu, GameOver, Victory, TutorialOverlay, Settings with volume sliders), procedural PCM audio synthesis for all SFX and ambient loops, GameState clean reset on restart, 100% Russian localization review | M1, M2, M3, M4 | DONE |
+| M6 | M6_FINAL_E2E_VERIFICATION_HARDENING | Phase 1: Pass 100% of E2E test suite published in TEST_READY.md. Phase 2: Adversarial coverage hardening with Challenger (Tier 5), README documentation, and final readiness audit | M1, M2, M3, M4, M5, E2E_TESTING_TRACK | DONE |
 
 ## Interface Contracts
 
@@ -92,7 +92,7 @@ static func calculate_stove_fuel(stove_on: bool, delta: float) -> float
 static func calculate_player_outside_exposure(delta: float, dist_from_house: float, safe_radius: float) -> float
 static func check_deadlock_condition(fuel: float, leg_durability: float, scrap: float, min_repair_cost: float, reachable_fuel: float, reachable_scrap: float, is_player_outside: bool) -> bool
 static func apply_repair(current_durability: float, scrap_available: float) -> Dictionary # {new_durability: float, scrap_spent: float}
-static func can_afford_upgrade(upgrade_type: String, scrap: float, supplies: float) -> bool
+static func can_afford_upgrade(upgrade_type: String, scrap: float, supplies: float = 0.0, fuel: float = 0.0) -> bool
 ```
 
 ### EventBus.gd ↔ Subsystems
@@ -136,8 +136,7 @@ e:\project\
 │   ├── Main.tscn
 │   ├── world/
 │   │   ├── World.tscn
-│   │   ├── ParallaxBackground.tscn
-│   │   └── POI.tscn
+│   │   └── ResourceNode.tscn
 │   ├── entities/
 │   │   ├── WalkingHouse.tscn
 │   │   └── Player.tscn
@@ -146,8 +145,9 @@ e:\project\
 │       ├── MainMenu.tscn
 │       ├── PauseMenu.tscn
 │       ├── UpgradePanel.tscn
-│       ├── GameOverScreen.tscn
-│       └── VictoryScreen.tscn
+│       ├── EndScreen.tscn
+│       ├── TutorialDialog.tscn
+│       └── SettingsDialog.tscn
 ├── scripts/
 │   ├── autoload/
 │   │   ├── GameState.gd
@@ -160,7 +160,10 @@ e:\project\
 │   │   ├── World.gd
 │   │   ├── BiomeManager.gd
 │   │   ├── WeatherManager.gd
-│   │   └── POI.gd
+│   │   ├── ResourceNode.gd
+│   │   ├── SnowTracks.gd
+│   │   ├── GameCamera.gd
+│   │   └── SkyCanvas.gd
 │   ├── entities/
 │   │   ├── WalkingHouse.gd
 │   │   ├── HouseLegs.gd
@@ -168,16 +171,15 @@ e:\project\
 │   └── ui/
 │       ├── HUD.gd
 │       ├── MainMenu.gd
+│       ├── MainMenuBackdrop.gd
 │       ├── PauseMenu.gd
 │       ├── UpgradePanel.gd
-│       └── EndScreen.gd
+│       ├── EndScreen.gd
+│       ├── TutorialDialog.gd
+│       └── SettingsDialog.gd
 └── tests/
+    ├── run_tests.ps1
     ├── test_runner.gd
-    └── suites/
-        ├── test_simulation_math.gd
-        ├── test_thermodynamics.gd
-        ├── test_upgrades_and_repairs.gd
-        ├── test_deadlock_detection.gd
-        ├── test_route_determinism.gd
-        └── test_full_progression.gd
+    ├── test_oracle.gd
+    └── suites/ (24 test suites)
 ```

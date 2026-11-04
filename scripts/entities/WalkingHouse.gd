@@ -334,7 +334,6 @@ func _handle_disembark_request() -> bool:
 	var sm: Node = _get_sound_manager()
 	
 	if gs == null:
-		print("DEBUG _handle_disembark: gs is NULL!")
 		return false
 		
 	# Exit Lockout Check: Cannot disembark while moving ($V > 0$)

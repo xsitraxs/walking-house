@@ -8,6 +8,7 @@ extends Node2D
 @onready var biome_mgr = get_node_or_null("../../../BiomeManager")
 
 var anim_time: float = 0.0
+var redraw_accum: float = 0.0
 
 func _ready() -> void:
 	if biome_mgr == null:
@@ -17,7 +18,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	anim_time += delta
-	queue_redraw()
+	redraw_accum += delta
+	if redraw_accum >= 0.05: # Throttle redraw to 20 FPS for performance
+		redraw_accum = 0.0
+		queue_redraw()
 
 func _draw() -> void:
 	var cam: Camera2D = null

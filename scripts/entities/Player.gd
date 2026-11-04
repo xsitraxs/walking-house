@@ -70,6 +70,7 @@ var current_interactable: Node = null
 var house_ref: Node2D = null            # Reference to WalkingHouse for tethering
 var alarm_audio_cooldown: float = 0.0
 var is_at_tether_limit: bool = false
+var tether_limit_dir: float = 0.0
 
 # ------------------------------------------------------------------------------
 # INITIALIZATION & LIFECYCLE
@@ -354,13 +355,15 @@ func _process_tether(delta: float) -> void:
 		global_position.x = house_ref.global_position.x + dir * CLAMP_LIMIT_PX
 		if (velocity.x * dir) > 0.0:
 			velocity.x = 0.0
-		if not is_at_tether_limit:
+		if not is_at_tether_limit or tether_limit_dir != dir:
 			is_at_tether_limit = true
+			tether_limit_dir = dir
 			if bus != null:
 				bus.emit_signal("prompt_requested", "Трос натянут до предела (50 м)!")
 	else:
 		if is_at_tether_limit:
 			is_at_tether_limit = false
+			tether_limit_dir = 0.0
 			if bus != null and not can_reenter_house and current_interactable == null:
 				bus.emit_signal("prompt_cleared")
 			

@@ -112,9 +112,10 @@ func test_07_can_afford_efficient_engine_upgrade(runner) -> void:
 		return
 	
 	var sim = load(SIM_PATH)
-	# Engine requires 15 scrap
-	runner.assert_true(sim.can_afford_upgrade("engine", 15.0, 0.0), "Can afford engine with 15 scrap")
-	runner.assert_false(sim.can_afford_upgrade("engine", 14.0, 10.0), "Cannot afford engine with 14 scrap")
+	# Engine requires 15 scrap and 20 fuel
+	runner.assert_true(sim.can_afford_upgrade("engine", 15.0, 0.0, 20.0), "Can afford engine with 15 scrap and 20 fuel")
+	runner.assert_false(sim.can_afford_upgrade("engine", 14.0, 0.0, 20.0), "Cannot afford engine with 14 scrap")
+	runner.assert_false(sim.can_afford_upgrade("engine", 15.0, 0.0, 19.0), "Cannot afford engine with 19 fuel")
 	runner.end_test()
 
 func test_08_can_afford_reinforced_legs_upgrade(runner) -> void:

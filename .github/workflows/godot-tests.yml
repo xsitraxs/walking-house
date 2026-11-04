@@ -1,0 +1,54 @@
+name: Godot 4 Headless E2E & Adversarial Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Headless Test Suites
+    runs-on: ubuntu-latest
+
+    env:
+      GODOT_VERSION: "4.3-stable"
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Godot Engine
+        run: |
+          wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip
+          unzip -q Godot_v${GODOT_VERSION}_linux.x86_64.zip
+          mv Godot_v${GODOT_VERSION}_linux.x86_64 /usr/local/bin/godot
+          chmod +x /usr/local/bin/godot
+          godot --version
+
+      - name: Run E2E Test Runner
+        run: |
+          godot --headless --path . -s res://tests/test_runner.gd
+
+      - name: Run Standalone Adversarial & Forensic Suites
+        run: |
+          standalone_suites=(
+            "res://tests/suites/test_simulation_math.gd"
+            "res://tests/suites/test_adversarial_stress.gd"
+            "res://tests/suites/test_adversarial_gamestate_reactivity.gd"
+            "res://tests/suites/test_adversarial_m2_challenger.gd"
+            "res://tests/suites/test_adversarial_m3_biome_interpolation.gd"
+            "res://tests/suites/test_adversarial_m3_challenger_r2.gd"
+            "res://tests/suites/test_adversarial_m3_challenger.gd"
+            "res://tests/suites/test_adversarial_m3_r2.gd"
+            "res://tests/suites/test_adversarial_thermo_deadlock.gd"
+            "res://tests/suites/test_balance_sound.gd"
+            "res://tests/suites/test_forensic_m3_auditor.gd"
+            "res://tests/suites/test_m2_challenger_adversarial.gd"
+            "res://tests/suites/test_m2_locomotion_hud.gd"
+            "res://tests/suites/test_m3_challenger_adversarial.gd"
+          )
+          for suite in "${standalone_suites[@]}"; do
+            echo "Running $suite..."
+            godot --headless --path . -s "$suite"
+          done

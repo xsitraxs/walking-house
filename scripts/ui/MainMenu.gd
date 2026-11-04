@@ -5,28 +5,51 @@ extends Control
 ## Main Menu Coordinator for «Шагающий дом» (Walking House).
 ## Features procedural vector art backdrop, ambient snow, warm cabin glow, and audio controls.
 
-@onready var start_btn: Button = get_node_or_null("MenuLayer/Center/Panel/VBox/MenuButtons/StartButton")
-@onready var tutorial_btn: Button = get_node_or_null("MenuLayer/Center/Panel/VBox/MenuButtons/TutorialButton")
-@onready var settings_btn: Button = get_node_or_null("MenuLayer/Center/Panel/VBox/MenuButtons/SettingsButton")
-@onready var quit_btn: Button = get_node_or_null("MenuLayer/Center/Panel/VBox/MenuButtons/QuitButton")
+@onready var start_btn: Button = get_node_or_null("MenuLayer/Margin/LeftBox/Panel/VBox/MenuButtons/StartButton")
+@onready var tutorial_btn: Button = get_node_or_null("MenuLayer/Margin/LeftBox/Panel/VBox/MenuButtons/TutorialButton")
+@onready var settings_btn: Button = get_node_or_null("MenuLayer/Margin/LeftBox/Panel/VBox/MenuButtons/SettingsButton")
+@onready var quit_btn: Button = get_node_or_null("MenuLayer/Margin/LeftBox/Panel/VBox/MenuButtons/QuitButton")
 
 @onready var tutorial_dialog = get_node_or_null("TutorialDialog")
 @onready var settings_dialog = get_node_or_null("SettingsDialog")
 
 func _ready() -> void:
-	if start_btn != null:
+	_resolve_references()
+	if start_btn != null and not start_btn.pressed.is_connected(_on_start_pressed):
 		start_btn.pressed.connect(_on_start_pressed)
-	if tutorial_btn != null:
+	if tutorial_btn != null and not tutorial_btn.pressed.is_connected(_on_tutorial_pressed):
 		tutorial_btn.pressed.connect(_on_tutorial_pressed)
-	if settings_btn != null:
+	if settings_btn != null and not settings_btn.pressed.is_connected(_on_settings_pressed):
 		settings_btn.pressed.connect(_on_settings_pressed)
-	if quit_btn != null:
+	if quit_btn != null and not quit_btn.pressed.is_connected(_on_quit_pressed):
 		quit_btn.pressed.connect(_on_quit_pressed)
 		
 	var sm = _get_sound_manager()
 	if sm != null:
 		sm.stop_all()
 		sm.set_wind_intensity(0.2) # Gentle ambient winter breeze
+
+func _resolve_references() -> void:
+	if start_btn == null:
+		start_btn = get_node_or_null("MenuLayer/Margin/LeftBox/Panel/VBox/MenuButtons/StartButton")
+		if start_btn == null:
+			start_btn = get_node_or_null("MenuLayer/Center/Panel/VBox/MenuButtons/StartButton")
+	if tutorial_btn == null:
+		tutorial_btn = get_node_or_null("MenuLayer/Margin/LeftBox/Panel/VBox/MenuButtons/TutorialButton")
+		if tutorial_btn == null:
+			tutorial_btn = get_node_or_null("MenuLayer/Center/Panel/VBox/MenuButtons/TutorialButton")
+	if settings_btn == null:
+		settings_btn = get_node_or_null("MenuLayer/Margin/LeftBox/Panel/VBox/MenuButtons/SettingsButton")
+		if settings_btn == null:
+			settings_btn = get_node_or_null("MenuLayer/Center/Panel/VBox/MenuButtons/SettingsButton")
+	if quit_btn == null:
+		quit_btn = get_node_or_null("MenuLayer/Margin/LeftBox/Panel/VBox/MenuButtons/QuitButton")
+		if quit_btn == null:
+			quit_btn = get_node_or_null("MenuLayer/Center/Panel/VBox/MenuButtons/QuitButton")
+	if tutorial_dialog == null:
+		tutorial_dialog = get_node_or_null("TutorialDialog")
+	if settings_dialog == null:
+		settings_dialog = get_node_or_null("SettingsDialog")
 
 func _on_start_pressed() -> void:
 	var sm = _get_sound_manager()

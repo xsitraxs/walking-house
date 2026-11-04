@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8d2yv7x3p1k0"]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/HUD.gd" id="1_hud_script"]
 
@@ -250,5 +250,5 @@ anchor_bottom = 1.0
 offset_top = -30.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "[A/D] Движение | [E] Выход/Вход | [F] Печь | [U] Улучшения | [Esc] Меню"
+text = "[A/D] Движение | [E] Выход/Вход | [F] Печь | [R] Ремонт | [H] Лечение | [U] Верстак | [Esc] Меню"
 horizontal_alignment = 1

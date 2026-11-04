@@ -26,16 +26,16 @@ const SimulationLogic = preload("res://scripts/core/SimulationLogic.gd")
 @onready var repair_button: Button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/RepairSection/RepairHBox/RepairButton")
 
 # Upgrade 1: Insulation
-@onready var ins_button: Button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/ActionHBox/InsulationButton")
-@onready var ins_cost_label: Label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/ActionHBox/InsulationCostLabel")
+@onready var ins_button: Button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/VBox/ActionHBox/InsulationButton")
+@onready var ins_cost_label: Label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/VBox/ActionHBox/InsulationCostLabel")
 
 # Upgrade 2: Efficient Engine
-@onready var eng_button: Button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/ActionHBox/EngineButton")
-@onready var eng_cost_label: Label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/ActionHBox/EngineCostLabel")
+@onready var eng_button: Button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/VBox/ActionHBox/EngineButton")
+@onready var eng_cost_label: Label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/VBox/ActionHBox/EngineCostLabel")
 
 # Upgrade 3: Reinforced Legs
-@onready var legs_button: Button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/ActionHBox/LegsButton")
-@onready var legs_cost_label: Label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/ActionHBox/LegsCostLabel")
+@onready var legs_button: Button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/VBox/ActionHBox/LegsButton")
+@onready var legs_cost_label: Label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/VBox/ActionHBox/LegsCostLabel")
 var game_state: Node = null
 
 # ------------------------------------------------------------------------------
@@ -69,17 +69,29 @@ func _resolve_references() -> void:
 	if repair_button == null:
 		repair_button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/RepairSection/RepairHBox/RepairButton")
 	if ins_button == null:
-		ins_button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/ActionHBox/InsulationButton")
+		ins_button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/VBox/ActionHBox/InsulationButton")
+		if ins_button == null:
+			ins_button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/ActionHBox/InsulationButton")
 	if ins_cost_label == null:
-		ins_cost_label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/ActionHBox/InsulationCostLabel")
+		ins_cost_label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/VBox/ActionHBox/InsulationCostLabel")
+		if ins_cost_label == null:
+			ins_cost_label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/ActionHBox/InsulationCostLabel")
 	if eng_button == null:
-		eng_button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/ActionHBox/EngineButton")
+		eng_button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/VBox/ActionHBox/EngineButton")
+		if eng_button == null:
+			eng_button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/ActionHBox/EngineButton")
 	if eng_cost_label == null:
-		eng_cost_label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/ActionHBox/EngineCostLabel")
+		eng_cost_label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/VBox/ActionHBox/EngineCostLabel")
+		if eng_cost_label == null:
+			eng_cost_label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/ActionHBox/EngineCostLabel")
 	if legs_button == null:
-		legs_button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/ActionHBox/LegsButton")
+		legs_button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/VBox/ActionHBox/LegsButton")
+		if legs_button == null:
+			legs_button = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/ActionHBox/LegsButton")
 	if legs_cost_label == null:
-		legs_cost_label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/ActionHBox/LegsCostLabel")
+		legs_cost_label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/VBox/ActionHBox/LegsCostLabel")
+		if legs_cost_label == null:
+			legs_cost_label = get_node_or_null("RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/ActionHBox/LegsCostLabel")
 
 func _connect_signals() -> void:
 	if close_button != null and not close_button.pressed.is_connected(close_panel):

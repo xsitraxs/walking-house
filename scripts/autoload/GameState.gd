@@ -114,7 +114,7 @@ func _process_thermodynamics_and_survival(delta: float) -> void:
 		
 	# 1. Stove fuel consumption
 	if is_stove_on:
-		var fuel_burn: float = SimulationLogic.calculate_stove_fuel(true, delta, 0.25)
+		var fuel_burn: float = SimulationLogic.calculate_stove_fuel(true, delta, BalanceConfig.STOVE_FUEL_RATE)
 		consume_fuel(fuel_burn)
 		
 	# 2. Cabin temperature evolution
@@ -126,29 +126,34 @@ func _process_thermodynamics_and_survival(delta: float) -> void:
 		has_insulation,
 		is_blizzard,
 		delta,
-		0.025,
-		1.1,
-		1.8,
+		BalanceConfig.CABIN_BASE_COOLING_RATE,
+		BalanceConfig.STOVE_HEATING_RATE,
+		BalanceConfig.CABIN_BLIZZARD_COOLING_MULT,
 		0.45,
-		24.0
+		BalanceConfig.CABIN_MAX_TEMP
 	)
 	set_cabin_temperature(new_temp)
 	
 	# 3. Inside cabin survival dynamics
 	if not is_player_outside:
-		if cabin_temperature < 0.0:
+		if cabin_temperature < BalanceConfig.CABIN_FREEZE_THRESHOLD:
 			var freeze_dmg: float = SimulationLogic.calculate_cabin_cold_damage(
 				cabin_temperature, 
 				delta, 
-				0.5
+				BalanceConfig.INDOOR_FREEZE_DAMAGE_RATE
 			)
 			if freeze_dmg > 0.0:
 				damage_player(freeze_dmg)
 			set_player_warmth(maxf(0.0, player_warmth - 15.0 * delta))
-		elif cabin_temperature >= 10.0:
+		elif cabin_temperature >= BalanceConfig.CABIN_COMFORT_TEMP:
 			set_player_warmth(minf(max_player_warmth, player_warmth + 25.0 * delta))
 			if player_health < max_player_health:
-				var recovery: float = SimulationLogic.calculate_warmth_recovery(cabin_temperature, delta, 0.5, 10.0)
+				var recovery: float = SimulationLogic.calculate_warmth_recovery(
+					cabin_temperature, 
+					delta, 
+					BalanceConfig.INDOOR_FREEZE_DAMAGE_RATE, 
+					BalanceConfig.CABIN_COMFORT_TEMP
+				)
 				if recovery > 0.0:
 					heal_player(recovery)
 
@@ -299,12 +304,13 @@ func repair_legs(durability_gain: float = 20.0, scrap_cost: float = 1.0) -> bool
 	if spent <= 0.0:
 		return false
 		
+	var actual_gain: float = new_dur - leg_durability
 	spend_scrap(spent)
 	leg_durability = new_dur
 	stats["repairs_count"] += 1
 	stats["scrap_spent_repairs"] += spent
 	
-	_emit_bus("repair_performed", [spent, durability_gain])
+	_emit_bus("repair_performed", [spent, actual_gain])
 	_emit_bus("leg_durability_changed", [leg_durability, max_leg_durability])
 	_emit_bus("leg_health_changed", [leg_durability, max_leg_durability])
 	return true
@@ -415,6 +421,16 @@ func damage_player(amount: float) -> void:
 
 func heal_player(amount: float) -> void:
 	set_player_health(player_health + amount)
+
+func consume_supply_for_heal() -> bool:
+	if supplies < 1.0 or player_health >= max_player_health:
+		return false
+	spend_supplies(1.0)
+	heal_player(BalanceConfig.SUPPLY_HEAL_AMOUNT)
+	var sm = _get_sound_manager()
+	if sm != null and sm.has_method("play_sfx"):
+		sm.play_sfx("repair")
+	return true
 
 func set_player_warmth(val: float) -> void:
 	var clamped: float = clamp(val, 0.0, max_player_warmth)

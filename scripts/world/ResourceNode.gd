@@ -2,6 +2,8 @@
 class_name ResourceNode
 extends Area2D
 
+const BalanceConfig = preload("res://scripts/core/BalanceConfig.gd")
+
 ## Interactive Resource Node entity for Milestone 3 (M3_PLAYER_EXPLORATION_WORLD).
 ## Features:
 ## - F21: Proximity Detection (Area2D with radius 50px = 2.5m)
@@ -333,7 +335,7 @@ func harvest() -> Dictionary:
 func is_reachable_from(house_pos_x: float, safe_radius_m: float = 45.0) -> bool:
 	if is_harvested:
 		return false
-	var dist_m: float = absf(global_position.x - house_pos_x) / 20.0 # BalanceConfig.METERS_TO_PIXELS
+	var dist_m: float = absf(global_position.x - house_pos_x) / BalanceConfig.METERS_TO_PIXELS
 	return dist_m <= safe_radius_m
 
 func get_unharvested_resources() -> Dictionary:

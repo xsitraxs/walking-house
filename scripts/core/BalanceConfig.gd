@@ -70,6 +70,7 @@ const BASE_REVERSE_SPEED: float = 2.5 # m/s (50 px/s)
 const HOUSE_ACCELERATION: float = 2.5 # m/s^2
 const PLAYER_SPEED: float = 3.2 # m/s (64 px/s)
 const PLAYER_SAFE_RADIUS: float = 45.0 # meters (900 px)
+const PLAYER_MAX_TETHER_RADIUS: float = 50.0 # meters (1000 px hard clamp)
 const PLAYER_INTERACT_RADIUS: float = 2.5 # meters (50 px)
 
 ## Initial state resources and capacities

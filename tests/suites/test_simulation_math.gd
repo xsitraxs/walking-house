@@ -262,10 +262,11 @@ func test_10_upgrade_affordability() -> bool:
 	assert(not sim.can_afford_upgrade("insulation", 11.0, 6.0))
 	assert(not sim.can_afford_upgrade("insulation", 12.0, 5.0))
 
-	# Engine (15 scrap) — test both canonical and short IDs
-	assert(sim.can_afford_upgrade("engine", 15.0, 0.0))
-	assert(sim.can_afford_upgrade("efficient_engine", 15.0, 0.0))
-	assert(not sim.can_afford_upgrade("engine", 14.0, 0.0))
+	# Engine (15 scrap, 20 fuel) — test both canonical and short IDs
+	assert(sim.can_afford_upgrade("engine", 15.0, 0.0, 20.0))
+	assert(sim.can_afford_upgrade("efficient_engine", 15.0, 0.0, 20.0))
+	assert(not sim.can_afford_upgrade("engine", 14.0, 0.0, 20.0))
+	assert(not sim.can_afford_upgrade("engine", 15.0, 0.0, 19.0))
 
 	# Legs (18 scrap, 8 supplies) — test both canonical and short IDs
 	assert(sim.can_afford_upgrade("legs", 18.0, 8.0))

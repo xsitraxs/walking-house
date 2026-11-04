@@ -11,18 +11,14 @@ const BalanceConfig = preload("res://scripts/core/BalanceConfig.gd")
 # ------------------------------------------------------------------------------
 # CONSTANTS
 # ------------------------------------------------------------------------------
-const CYCLE_DURATION: float = 300.0 # 5 minutes total period
-const DAY_DURATION: float = 150.0   # 150s (50%)
-const DUSK_DURATION: float = 30.0   # 30s (10%)
-const NIGHT_DURATION: float = 90.0  # 90s (30%)
-const DAWN_DURATION: float = 30.0   # 30s (10%)
+const CYCLE_DURATION: float = BalanceConfig.DAY_NIGHT_CYCLE_DURATION
+const DAY_DURATION: float = BalanceConfig.DAY_DURATION
+const DUSK_DURATION: float = BalanceConfig.DUSK_DURATION
+const NIGHT_DURATION: float = BalanceConfig.NIGHT_DURATION
+const DAWN_DURATION: float = BalanceConfig.DAWN_DURATION
 
-const BLIZZARD_WARNING_LEAD_TIME: float = 20.0 # seconds warning prior to blizzard
-
-const BLIZZARD_EVENTS: Array[Dictionary] = [
-	{"id": "blizzard_1", "trigger_distance_m": 1400.0, "duration_sec": 40.0, "temp_drop": -15.0},
-	{"id": "blizzard_2", "trigger_distance_m": 3300.0, "duration_sec": 50.0, "temp_drop": -15.0}
-]
+const BLIZZARD_WARNING_LEAD_TIME: float = BalanceConfig.BLIZZARD_WARNING_LEAD_TIME
+const BLIZZARD_EVENTS: Array[Dictionary] = BalanceConfig.BLIZZARD_EVENTS
 
 # ------------------------------------------------------------------------------
 # BLIZZARD EVENT STATE MACHINE

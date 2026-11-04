@@ -5,6 +5,7 @@ extends SceneTree
 
 const SIM_PATH: String = "res://scripts/core/SimulationLogic.gd"
 const CONFIG_PATH: String = "res://scripts/core/BalanceConfig.gd"
+const BalanceConfig = preload("res://scripts/core/BalanceConfig.gd")
 const GAME_STATE_PATH: String = "res://scripts/autoload/GameState.gd"
 const EVENT_BUS_PATH: String = "res://scripts/autoload/EventBus.gd"
 const SOUND_MGR_PATH: String = "res://scripts/autoload/SoundManager.gd"

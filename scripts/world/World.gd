@@ -161,7 +161,7 @@ func _process_deadlock_detection(delta: float) -> void:
 		return
 		
 	var house_x_px: float = house.global_position.x if house != null else 0.0
-	var reachable: Dictionary = ResourceNode.query_reachable_resources(house_x_px, 50.0, get_tree())
+	var reachable: Dictionary = ResourceNode.query_reachable_resources(house_x_px, BalanceConfig.PLAYER_MAX_TETHER_RADIUS, get_tree())
 	var reachable_fuel: float = reachable.get("reachable_fuel", 0.0)
 	var reachable_scrap: float = reachable.get("reachable_scrap", 0.0)
 	
@@ -179,7 +179,7 @@ func _process_deadlock_detection(delta: float) -> void:
 		deadlock_timer,
 		is_condition_met,
 		delta,
-		3.0
+		BalanceConfig.DEADLOCK_GRACE_PERIOD
 	)
 	deadlock_timer = timer_res.get("timer", 0.0)
 	

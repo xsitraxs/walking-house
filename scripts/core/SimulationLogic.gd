@@ -103,7 +103,7 @@ static func can_afford_upgrade(
 		"insulation":
 			return scrap >= 12.0 and supplies >= 6.0
 		"engine", "efficient_engine":
-			return scrap >= 15.0 and (fuel >= 20.0 or fuel == 0.0)
+			return scrap >= 15.0 and fuel >= 20.0
 		"legs", "reinforced_legs":
 			return scrap >= 18.0 and supplies >= 8.0
 		_:
