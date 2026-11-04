@@ -18,6 +18,24 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Verify no BOM in Godot text resources
+        run: |
+          # Godot's .tscn/.tres/.gd parser rejects a leading UTF-8 BOM
+          # ("Parse Error: Expected '['" on line 1). Fail fast and loud
+          # here instead of letting every scene load as a null resource.
+          found=0
+          while IFS= read -r f; do
+            if [ "$(head -c 3 "$f" | od -An -tx1 | tr -d ' \n')" = "efbbbf" ]; then
+              echo "::error file=$f::Файл начинается с UTF-8 BOM — Godot не сможет его разобрать"
+              found=1
+            fi
+          done < <(git ls-files '*.tscn' '*.tres' '*.gd' '*.godot' '*.import' '*.cfg')
+          if [ "$found" -ne 0 ]; then
+            echo "Уберите BOM: sed -i '1s/^\xEF\xBB\xBF//' <файл>"
+            exit 1
+          fi
+          echo "BOM не найден — все текстовые ресурсы Godot в порядке."
+
       - name: Setup Godot Engine
         run: |
           wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}/Godot_v${GODOT_VERSION}_linux.x86_64.zip

@@ -1,0 +1,28 @@
+# Нормализация окончаний строк.
+* text=auto eol=lf
+
+# Godot: сцены и ресурсы. UTF-8 БЕЗ BOM — иначе парсер .tscn/.tres
+# падает с "Parse Error: Expected '['" на первой строке.
+*.tscn   text eol=lf
+*.tres   text eol=lf
+*.gd     text eol=lf
+*.godot  text eol=lf
+*.cfg    text eol=lf
+*.import text eol=lf
+*.shader text eol=lf
+
+# Бинарные ассеты — не трогать.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.webp binary
+*.ogg  binary
+*.wav  binary
+*.mp3  binary
+*.ttf  binary
+*.otf  binary
+*.zip  binary
+
+# Сгенерированные кэши Godot не версионируются.
+.godot/**        linguist-generated=true
+*.translation    binary

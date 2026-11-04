@@ -1,4 +1,4 @@
-﻿[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/entities/WalkingHouse.gd" id="1_house_script"]
 [ext_resource type="Script" path="res://scripts/entities/HouseLegs.gd" id="2_legs_script"]
