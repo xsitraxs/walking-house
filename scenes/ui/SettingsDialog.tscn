@@ -1,0 +1,160 @@
+[gd_scene load_steps=5 format=3 uid="uid://df5m5settings01"]
+
+[ext_resource type="Script" path="res://scripts/ui/SettingsDialog.gd" id="1_sett_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.06, 0.08, 0.12, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.24, 0.38, 0.54, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.09, 0.12, 0.18, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.32, 0.44, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+bg_color = Color(0.18, 0.35, 0.55, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.65, 0.9, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="SettingsDialog" type="CanvasLayer"]
+process_mode = 3
+layer = 36
+visible = false
+script = ExtResource("1_sett_script")
+
+[node name="RootControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="RootControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.04, 0.06, 0.75)
+
+[node name="Center" type="CenterContainer" parent="RootControl/Dimmer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ModalPanel" type="PanelContainer" parent="RootControl/Dimmer/Center"]
+custom_minimum_size = Vector2(560, 360)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+modulate = Color(0.9, 0.95, 1, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "🔊 НАСТРОЙКИ ЗВУКА"
+horizontal_alignment = 1
+
+[node name="HSeparator1" type="HSeparator" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="SlidersVBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="MasterHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/SlidersVBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/SlidersVBox/MasterHBox"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+text = "Общая громкость:"
+
+[node name="MasterSlider" type="HSlider" parent="RootControl/Dimmer/Center/ModalPanel/VBox/SlidersVBox/MasterHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 80.0
+
+[node name="SFXHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/SlidersVBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/SlidersVBox/SFXHBox"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+text = "Эффекты и шаги:"
+
+[node name="SFXSlider" type="HSlider" parent="RootControl/Dimmer/Center/ModalPanel/VBox/SlidersVBox/SFXHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 80.0
+
+[node name="WindHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/SlidersVBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/SlidersVBox/WindHBox"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+text = "Ветер и метель:"
+
+[node name="WindSlider" type="HSlider" parent="RootControl/Dimmer/Center/ModalPanel/VBox/SlidersVBox/WindHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 80.0
+
+[node name="HSeparator2" type="HSeparator" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="ButtonHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="CloseButton" type="Button" parent="RootControl/Dimmer/Center/ModalPanel/VBox/ButtonHBox"]
+custom_minimum_size = Vector2(180, 38)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "ЗАКРЫТЬ"

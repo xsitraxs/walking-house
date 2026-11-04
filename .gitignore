@@ -1,0 +1,9 @@
+# Godot 4.x
+.godot/
+
+# Logs and temporary files
+*.log
+test_output.log
+
+# Agent workspace data
+.agents/

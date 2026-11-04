@@ -1,0 +1,111 @@
+[gd_scene load_steps=19 format=3 uid="uid://df2m3worldscene01"]
+
+[ext_resource type="Script" path="res://scripts/world/World.gd" id="1_world_script"]
+[ext_resource type="Script" path="res://scripts/world/SkyCanvas.gd" id="2_sky_script"]
+[ext_resource type="Script" path="res://scripts/world/MountainCanvas.gd" id="3_mount_script"]
+[ext_resource type="Script" path="res://scripts/world/MidgroundCanvas.gd" id="4_mid_script"]
+[ext_resource type="Script" path="res://scripts/world/DunesCanvas.gd" id="5_dune_script"]
+[ext_resource type="Script" path="res://scripts/world/BiomeManager.gd" id="6_biome_script"]
+[ext_resource type="Script" path="res://scripts/world/GroundVisual.gd" id="7_ground_script"]
+[ext_resource type="Script" path="res://scripts/world/SnowTracks.gd" id="8_tracks_script"]
+[ext_resource type="Script" path="res://scripts/world/GameCamera.gd" id="9_camera_script"]
+[ext_resource type="PackedScene" path="res://scenes/entities/WalkingHouse.tscn" id="10_house_scene"]
+[ext_resource type="PackedScene" path="res://scenes/entities/Player.tscn" id="11_player_scene"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="12_hud_scene"]
+[ext_resource type="Script" path="res://scripts/world/WeatherManager.gd" id="13_weather_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/UpgradePanel.tscn" id="14_upgrade_scene"]
+[ext_resource type="PackedScene" path="res://scenes/ui/PauseMenu.tscn" id="15_pause_scene"]
+[ext_resource type="PackedScene" path="res://scenes/ui/EndScreen.tscn" id="16_end_scene"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(102000, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(100, 1000)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_world_script")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="SkyLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.02, 0)
+
+[node name="SkyCanvas" type="Node2D" parent="ParallaxBackground/SkyLayer"]
+script = ExtResource("2_sky_script")
+
+[node name="MountainLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.08, 0)
+
+[node name="MountainCanvas" type="Node2D" parent="ParallaxBackground/MountainLayer"]
+script = ExtResource("3_mount_script")
+
+[node name="MidgroundLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.25, 0)
+
+[node name="MidgroundCanvas" type="Node2D" parent="ParallaxBackground/MidgroundLayer"]
+script = ExtResource("4_mid_script")
+
+[node name="ForegroundDunesLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.6, 0)
+
+[node name="DunesCanvas" type="Node2D" parent="ParallaxBackground/ForegroundDunesLayer"]
+script = ExtResource("5_dune_script")
+
+[node name="BiomeManager" type="Node2D" parent="."]
+script = ExtResource("6_biome_script")
+
+[node name="Ground" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="GroundCollision" type="CollisionShape2D" parent="Ground"]
+position = Vector2(50000, 660)
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="LeftWall" type="CollisionShape2D" parent="Ground"]
+position = Vector2(-50, 200)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RightWall" type="CollisionShape2D" parent="Ground"]
+position = Vector2(100500, 200)
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="GroundVisual" type="Node2D" parent="Ground"]
+script = ExtResource("7_ground_script")
+
+[node name="SnowTracks" type="Node2D" parent="."]
+script = ExtResource("8_tracks_script")
+
+[node name="ResourceNodes" type="Node2D" parent="."]
+
+[node name="WalkingHouse" parent="." instance=ExtResource("10_house_scene")]
+position = Vector2(0, 432)
+
+[node name="Player" parent="." instance=ExtResource("11_player_scene")]
+visible = false
+position = Vector2(-60, 560)
+
+[node name="WorldCamera" type="Camera2D" parent="." node_paths=PackedStringArray("target_house", "target_player")]
+position = Vector2(80, 360)
+script = ExtResource("9_camera_script")
+target_house = NodePath("../WalkingHouse")
+target_player = NodePath("../Player")
+
+[node name="WorldCanvasModulate" type="CanvasModulate" parent="."]
+color = Color(1, 1, 1, 1)
+
+[node name="WeatherManager" type="Node2D" parent="."]
+script = ExtResource("13_weather_script")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="UI" instance=ExtResource("12_hud_scene")]
+
+[node name="UpgradePanel" parent="UI" instance=ExtResource("14_upgrade_scene")]
+visible = false
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("15_pause_scene")]
+visible = false
+
+[node name="EndScreen" parent="UI" instance=ExtResource("16_end_scene")]
+visible = false

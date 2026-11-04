@@ -1,0 +1,228 @@
+[gd_scene load_steps=5 format=3 uid="uid://df5m5tutdialog01"]
+
+[ext_resource type="Script" path="res://scripts/ui/TutorialDialog.gd" id="1_tut_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0.06, 0.08, 0.12, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.24, 0.38, 0.54, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_section"]
+content_margin_left = 14.0
+content_margin_top = 10.0
+content_margin_right = 14.0
+content_margin_bottom = 10.0
+bg_color = Color(0.09, 0.12, 0.18, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.32, 0.44, 0.5)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 8.0
+bg_color = Color(0.18, 0.35, 0.55, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.65, 0.9, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="TutorialDialog" type="CanvasLayer"]
+process_mode = 3
+layer = 35
+visible = false
+script = ExtResource("1_tut_script")
+
+[node name="RootControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="RootControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.03, 0.04, 0.06, 0.75)
+
+[node name="Center" type="CenterContainer" parent="RootControl/Dimmer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ModalPanel" type="PanelContainer" parent="RootControl/Dimmer/Center"]
+custom_minimum_size = Vector2(820, 600)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Header"]
+modulate = Color(0.9, 0.95, 1, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 20
+text = "❄ ИНСТРУКЦИЯ ПО ВЫЖИВАНИЮ: «ШАГАЮЩИЙ ДОМ»"
+
+[node name="HSeparator1" type="HSeparator" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="Scroll" type="ScrollContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+custom_minimum_size = Vector2(0, 440)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ContentVBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="GoalSection" type="PanelContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_section")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/GoalSection"]
+layout_mode = 2
+
+[node name="SectionTitle" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/GoalSection/VBox"]
+modulate = Color(1, 0.85, 0.4, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "🎯 ГЛАВНАЯ ЦЕЛЬ"
+
+[node name="Desc" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/GoalSection/VBox"]
+modulate = Color(0.85, 0.9, 0.95, 0.9)
+layout_mode = 2
+autowrap_mode = 2
+text = "Преодолеть 5000 метров через заледеневшую пустошь и добраться до заброшенной станции, где ещё работает геотермальный источник тепла. Шагающий дом — ваше единственное убежище, транспорт и передвижная мастерская."
+
+[node name="ControlsSection" type="PanelContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_section")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection"]
+layout_mode = 2
+
+[node name="SectionTitle" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox"]
+modulate = Color(0.5, 0.9, 1, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "⌨ УПРАВЛЕНИЕ"
+
+[node name="Grid" type="GridContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox"]
+layout_mode = 2
+columns = 2
+
+[node name="K1" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox/Grid"]
+modulate = Color(1, 0.9, 0.5, 1)
+layout_mode = 2
+text = "[A] / [D] или [Стрелки]"
+
+[node name="D1" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox/Grid"]
+layout_mode = 2
+text = "— Движение дома (внутри) / Перемещение исследователя (снаружи)"
+
+[node name="K2" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox/Grid"]
+modulate = Color(1, 0.9, 0.5, 1)
+layout_mode = 2
+text = "[E] или [Пробел]"
+
+[node name="D2" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox/Grid"]
+layout_mode = 2
+text = "— Выход из дома / Вход в дом (только при остановке!) / Обыск тайников"
+
+[node name="K3" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox/Grid"]
+modulate = Color(1, 0.9, 0.5, 1)
+layout_mode = 2
+text = "[F]"
+
+[node name="D3" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox/Grid"]
+layout_mode = 2
+text = "— Зажечь / Погасить дровяную печь (расход 0.25 л/сек)"
+
+[node name="K4" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox/Grid"]
+modulate = Color(1, 0.9, 0.5, 1)
+layout_mode = 2
+text = "[U] или [Tab]"
+
+[node name="D4" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox/Grid"]
+layout_mode = 2
+text = "— Открыть верстак (ремонт опор за металлолом и улучшения)"
+
+[node name="K5" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox/Grid"]
+modulate = Color(1, 0.9, 0.5, 1)
+layout_mode = 2
+text = "[Escape]"
+
+[node name="D5" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/ControlsSection/VBox/Grid"]
+layout_mode = 2
+text = "— Меню паузы и регулировка звука"
+
+[node name="RulesSection" type="PanelContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_section")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/RulesSection"]
+layout_mode = 2
+
+[node name="SectionTitle" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/RulesSection/VBox"]
+modulate = Color(0.9, 0.6, 1, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "💡 ПРАВИЛА ВЫЖИВАНИЯ"
+
+[node name="RulesText" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/Scroll/ContentVBox/RulesSection/VBox"]
+modulate = Color(0.85, 0.9, 0.95, 0.9)
+layout_mode = 2
+autowrap_mode = 2
+text = "• ТОПЛИВО: Расходуется при движении и работе печи. Если топливо кончится, дом встанет, а печь погаснет.
+• ОПОРЫ И РЕМОНТ: Ноги изнашиваются от ходьбы. При износе скорость падает. Чините их в верстаке [U] за металлолом (+20% за штуку).
+• ТЕПЛО И ЗДОРОВЬЕ: Температура в доме остывает. Топите печь [F], чтобы согреться. Ниже 0°C здоровье быстро тает!
+• СБОР РЕСУРСОВ: Заметив ящик или брошенный тягач, остановите дом, выйдите [E] и обыщите объект. Страховочный трос не даст потеряться (предел 50 м).
+• МЕТЕЛЬ: При приближении шторма звучит сирена (за 20 сек). Возвращайтесь в дом и топите печь — на улице буря смертельна!"
+
+[node name="ButtonHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="CloseButton" type="Button" parent="RootControl/Dimmer/Center/ModalPanel/VBox/ButtonHBox"]
+custom_minimum_size = Vector2(220, 42)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "ПОНЯТНО, В ПУТЬ!"

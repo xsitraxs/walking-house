@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6xk7b0qwv85n"]
+
+[ext_resource type="Script" path="res://scripts/entities/WalkingHouse.gd" id="1_house_script"]
+[ext_resource type="Script" path="res://scripts/entities/HouseLegs.gd" id="2_legs_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_chassis"]
+size = Vector2(160, 130)
+
+[node name="WalkingHouse" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("1_house_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -45)
+shape = SubResource("RectangleShape2D_chassis")
+
+[node name="Leg_Back" type="Node2D" parent="."]
+z_index = -1
+script = ExtResource("2_legs_script")
+leg_id = "back"
+hip_offset = Vector2(-49, 13)
+
+[node name="FootstepParticles" type="CPUParticles2D" parent="Leg_Back"]
+emitting = false
+one_shot = true
+
+[node name="CabinPivot" type="Node2D" parent="."]
+
+[node name="WindowLightMain" type="PointLight2D" parent="CabinPivot"]
+position = Vector2(22, -60)
+color = Color(1, 0.82, 0.42, 1)
+
+[node name="WindowLightPorthole" type="PointLight2D" parent="CabinPivot"]
+position = Vector2(-40, -65)
+color = Color(1, 0.78, 0.38, 1)
+
+[node name="HearthLight" type="PointLight2D" parent="CabinPivot"]
+position = Vector2(25, -50)
+color = Color(1, 0.55, 0.15, 1)
+
+[node name="LadderWorkLight" type="PointLight2D" parent="CabinPivot"]
+position = Vector2(-60, -2)
+color = Color(0.95, 0.9, 0.7, 0.8)
+
+[node name="ChimneySmoke" type="CPUParticles2D" parent="CabinPivot"]
+position = Vector2(46, -180)
+emitting = false
+
+[node name="Leg_Front" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource("2_legs_script")
+leg_id = "front"
+phase_offset = 3.14159
+is_foreground = true
+hip_offset = Vector2(49, 13)
+
+[node name="FootstepParticles" type="CPUParticles2D" parent="Leg_Front"]
+emitting = false
+one_shot = true

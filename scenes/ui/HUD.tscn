@@ -1,0 +1,254 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8d2yv7x3p1k0"]
+
+[ext_resource type="Script" path="res://scripts/ui/HUD.gd" id="1_hud_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_frosted"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.06, 0.08, 0.12, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.24, 0.38, 0.52, 0.75)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fuel"]
+bg_color = Color(0.95, 0.6, 0.1, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_legs"]
+bg_color = Color(0.2, 0.7, 0.85, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health"]
+bg_color = Color(0.85, 0.2, 0.25, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud_script")
+
+[node name="RootControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopMargin" type="MarginContainer" parent="RootControl"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 130.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+
+[node name="MainHBox" type="HBoxContainer" parent="RootControl/TopMargin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HousePanel" type="PanelContainer" parent="RootControl/TopMargin/MainHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_frosted")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/TopMargin/MainHBox/HousePanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox"]
+modulate = Color(0.75, 0.85, 0.95, 1)
+layout_mode = 2
+text = "⚙ ШАССИ И ДВИГАТЕЛЬ"
+
+[node name="FuelContainer" type="VBoxContainer" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox"]
+layout_mode = 2
+
+[node name="FuelLabel" type="Label" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox/FuelContainer"]
+layout_mode = 2
+text = "Топливо: 100.0 / 100.0 л"
+
+[node name="FuelBar" type="ProgressBar" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox/FuelContainer"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_fuel")
+value = 100.0
+show_percentage = false
+
+[node name="LegsContainer" type="VBoxContainer" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox"]
+layout_mode = 2
+
+[node name="LegsLabel" type="Label" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox/LegsContainer"]
+layout_mode = 2
+text = "Прочность опор: 100.0%"
+
+[node name="LegsBar" type="ProgressBar" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox/LegsContainer"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_legs")
+value = 100.0
+show_percentage = false
+
+[node name="MaintenanceHBox" type="HBoxContainer" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox"]
+layout_mode = 2
+
+[node name="RepairButton" type="Button" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox/MaintenanceHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[R] Ремонт"
+
+[node name="UpgradesButton" type="Button" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox/MaintenanceHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[U] Верстак"
+
+[node name="StoveContainer" type="HBoxContainer" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox"]
+layout_mode = 2
+
+[node name="StoveLabel" type="Label" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox/StoveContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Печь: ВЫКЛ"
+
+[node name="StoveButton" type="Button" parent="RootControl/TopMargin/MainHBox/HousePanel/VBox/StoveContainer"]
+layout_mode = 2
+text = "[F] Печь"
+
+[node name="NavPanel" type="PanelContainer" parent="RootControl/TopMargin/MainHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_frosted")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/TopMargin/MainHBox/NavPanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="RootControl/TopMargin/MainHBox/NavPanel/VBox"]
+modulate = Color(0.75, 0.85, 0.95, 1)
+layout_mode = 2
+text = "🧭 НАВИГАЦИЯ И ПОГОДА"
+
+[node name="DistTraveledLabel" type="Label" parent="RootControl/TopMargin/MainHBox/NavPanel/VBox"]
+layout_mode = 2
+text = "Пройдено: 0.0 м"
+
+[node name="DistRemainingLabel" type="Label" parent="RootControl/TopMargin/MainHBox/NavPanel/VBox"]
+layout_mode = 2
+text = "До станции: 5000.0 м"
+
+[node name="WeatherLabel" type="Label" parent="RootControl/TopMargin/MainHBox/NavPanel/VBox"]
+layout_mode = 2
+text = "Погода: Ясно (-15.0°C)"
+
+[node name="CrewPanel" type="PanelContainer" parent="RootControl/TopMargin/MainHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_frosted")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/TopMargin/MainHBox/CrewPanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox"]
+modulate = Color(0.75, 0.85, 0.95, 1)
+layout_mode = 2
+text = "👤 ЭКИПАЖ И РЕСУРСЫ"
+
+[node name="HealthContainer" type="VBoxContainer" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox"]
+layout_mode = 2
+
+[node name="HealthLabel" type="Label" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox/HealthContainer"]
+layout_mode = 2
+text = "Здоровье: 100 / 100 HP"
+
+[node name="HealthBar" type="ProgressBar" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_health")
+value = 100.0
+show_percentage = false
+
+[node name="CabinTempLabel" type="Label" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox"]
+layout_mode = 2
+text = "Температура в доме: +18.0°C"
+
+[node name="ResHBox" type="HBoxContainer" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox"]
+layout_mode = 2
+
+[node name="ScrapLabel" type="Label" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox/ResHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Металлолом: 0 шт."
+
+[node name="SuppliesLabel" type="Label" parent="RootControl/TopMargin/MainHBox/CrewPanel/VBox/ResHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Припасы: 5 шт."
+
+[node name="AlertBanner" type="PanelContainer" parent="RootControl"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 160.0
+offset_right = 250.0
+offset_bottom = 205.0
+grow_horizontal = 2
+
+[node name="AlertLabel" type="Label" parent="RootControl/AlertBanner"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
+text = "ВНИМАНИЕ"
+horizontal_alignment = 1
+
+[node name="PromptContainer" type="PanelContainer" parent="RootControl"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PromptLabel" type="Label" parent="RootControl/PromptContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="ControlsHint" type="Label" parent="RootControl"]
+modulate = Color(0.7, 0.7, 0.7, 0.8)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "[A/D] Движение | [E] Выход/Вход | [F] Печь | [U] Улучшения | [Esc] Меню"
+horizontal_alignment = 1

@@ -1,0 +1,233 @@
+[gd_scene load_steps=6 format=3 uid="uid://df5m5endscreen01"]
+
+[ext_resource type="Script" path="res://scripts/ui/EndScreen.gd" id="1_end_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+content_margin_left = 32.0
+content_margin_top = 28.0
+content_margin_right = 32.0
+content_margin_bottom = 28.0
+bg_color = Color(0.06, 0.08, 0.12, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25, 0.4, 0.58, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stats"]
+content_margin_left = 16.0
+content_margin_top = 12.0
+content_margin_right = 16.0
+content_margin_bottom = 12.0
+bg_color = Color(0.08, 0.11, 0.16, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.32, 0.45, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_primary"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.18, 0.35, 0.55, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.65, 0.9, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_secondary"]
+content_margin_left = 20.0
+content_margin_top = 10.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+bg_color = Color(0.1, 0.14, 0.2, 0.8)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.35, 0.48, 0.6)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="EndScreen" type="CanvasLayer"]
+process_mode = 3
+layer = 40
+visible = false
+script = ExtResource("1_end_script")
+
+[node name="RootControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="RootControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.03, 0.05, 0.8)
+
+[node name="Center" type="CenterContainer" parent="RootControl/Dimmer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ModalPanel" type="PanelContainer" parent="RootControl/Dimmer/Center"]
+custom_minimum_size = Vector2(620, 500)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TitleLabel" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "🏆 СТАНЦИЯ ДОСТИГНУТА! ПОБЕДА!"
+horizontal_alignment = 1
+
+[node name="SubTitleLabel" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Экспедиция успешно преодолела ледяную пустошь."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="HSeparator1" type="HSeparator" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="StatsPanel" type="PanelContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_stats")
+
+[node name="StatsGrid" type="GridContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="DistKey" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+modulate = Color(0.7, 0.8, 0.9, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Пройденное расстояние:"
+
+[node name="DistVal" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+layout_mode = 2
+text = "0.0 м / 5000.0 м"
+
+[node name="TimeKey" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+modulate = Color(0.7, 0.8, 0.9, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Время в пути:"
+
+[node name="TimeVal" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+layout_mode = 2
+text = "0 мин 00 сек"
+
+[node name="FuelKey" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+modulate = Color(0.7, 0.8, 0.9, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Топлива собрано:"
+
+[node name="FuelVal" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+layout_mode = 2
+text = "0.0 л"
+
+[node name="ScrapKey" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+modulate = Color(0.7, 0.8, 0.9, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Металлолома собрано:"
+
+[node name="ScrapVal" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+layout_mode = 2
+text = "0 шт."
+
+[node name="SuppliesKey" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+modulate = Color(0.7, 0.8, 0.9, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Припасов найдено:"
+
+[node name="SuppliesVal" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+layout_mode = 2
+text = "0 шт."
+
+[node name="RepairsKey" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+modulate = Color(0.7, 0.8, 0.9, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Ремонтов шасси выполнено:"
+
+[node name="RepairsVal" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+layout_mode = 2
+text = "0 раз"
+
+[node name="UpgradesKey" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+modulate = Color(0.7, 0.8, 0.9, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Улучшений установлено:"
+
+[node name="UpgradesVal" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+layout_mode = 2
+text = "0 из 3"
+
+[node name="BlizzardsKey" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+modulate = Color(0.7, 0.8, 0.9, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Метелей пережито:"
+
+[node name="BlizzardsVal" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/StatsGrid"]
+layout_mode = 2
+text = "0"
+
+[node name="HSeparator2" type="HSeparator" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="ButtonHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="RetryButton" type="Button" parent="RootControl/Dimmer/Center/ModalPanel/VBox/ButtonHBox"]
+custom_minimum_size = Vector2(200, 42)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_primary")
+text = "🔄 ПОВТОРИТЬ ПОПЫТКУ"
+
+[node name="MenuButton" type="Button" parent="RootControl/Dimmer/Center/ModalPanel/VBox/ButtonHBox"]
+custom_minimum_size = Vector2(180, 42)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_secondary")
+text = "🏠 В ГЛАВНОЕ МЕНЮ"

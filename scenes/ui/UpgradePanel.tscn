@@ -1,0 +1,250 @@
+[gd_scene load_steps=4 format=3 uid="uid://df4m4upgradepanel01"]
+
+[ext_resource type="Script" path="res://scripts/ui/UpgradePanel.gd" id="1_upgrade_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal"]
+content_margin_left = 20.0
+content_margin_top = 16.0
+content_margin_right = 20.0
+content_margin_bottom = 16.0
+bg_color = Color(0.06, 0.08, 0.12, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.24, 0.38, 0.52, 0.85)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.1, 0.13, 0.18, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.3, 0.42, 0.6)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="UpgradePanel" type="CanvasLayer"]
+layer = 25
+visible = false
+script = ExtResource("1_upgrade_script")
+
+[node name="RootControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dimmer" type="ColorRect" parent="RootControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.06, 0.08, 0.7)
+
+[node name="Center" type="CenterContainer" parent="RootControl/Dimmer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ModalPanel" type="PanelContainer" parent="RootControl/Dimmer/Center"]
+custom_minimum_size = Vector2(760, 540)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HeaderHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/HeaderHBox"]
+modulate = Color(0.85, 0.92, 1, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "⚙ ВЕРСТАК И МОДЕРНИЗАЦИЯ ДОМА"
+
+[node name="CloseButton" type="Button" parent="RootControl/Dimmer/Center/ModalPanel/VBox/HeaderHBox"]
+layout_mode = 2
+text = "[ X ]"
+
+[node name="SubTitle" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+modulate = Color(0.65, 0.75, 0.85, 0.8)
+layout_mode = 2
+text = "Техническое обслуживание шасси и установка долговечных улучшений"
+
+[node name="HSeparator1" type="HSeparator" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="ResourceBar" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="ScrapLabel" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/ResourceBar"]
+layout_mode = 2
+text = "⚙ Металлолом: 0 шт."
+
+[node name="FuelLabel" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/ResourceBar"]
+layout_mode = 2
+text = "⛽ Топливо: 100.0 л"
+
+[node name="SuppliesLabel" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/ResourceBar"]
+layout_mode = 2
+text = "📦 Припасы: 5 шт."
+
+[node name="HSeparator2" type="HSeparator" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="RepairSection" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="RepairTitle" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/RepairSection"]
+modulate = Color(0.95, 0.85, 0.4, 1)
+layout_mode = 2
+text = "🛠 ТЕХНИЧЕСКОЕ ОБСЛУЖИВАНИЕ ШАССИ"
+
+[node name="RepairHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/RepairSection"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="DurabilityLabel" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/RepairSection/RepairHBox"]
+layout_mode = 2
+text = "Прочность опор: 100.0% / 100.0%"
+
+[node name="DurabilityBar" type="ProgressBar" parent="RootControl/Dimmer/Center/ModalPanel/VBox/RepairSection/RepairHBox"]
+custom_minimum_size = Vector2(160, 16)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="RepairButton" type="Button" parent="RootControl/Dimmer/Center/ModalPanel/VBox/RepairSection/RepairHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[R] Починить опоры (+20%) — 1 металлолом"
+
+[node name="HSeparator3" type="HSeparator" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="UpgradesVBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="InsulationCard" type="PanelContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/VBox"]
+modulate = Color(0.9, 0.95, 1, 1)
+layout_mode = 2
+text = "❄ Утепление корпуса"
+
+[node name="Desc" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/VBox"]
+modulate = Color(0.75, 0.8, 0.85, 0.85)
+layout_mode = 2
+text = "Снижает естественные теплопотери кабины на 45%. Защищает экипаж от переохлаждения в буран."
+
+[node name="ActionHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/VBox"]
+layout_mode = 2
+
+[node name="InsulationCostLabel" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/VBox/ActionHBox"]
+modulate = Color(0.95, 0.85, 0.45, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Стоимость: 12 металлолома, 6 припасов"
+
+[node name="InsulationButton" type="Button" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/InsulationCard/VBox/ActionHBox"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "[Купить]"
+
+[node name="EngineCard" type="PanelContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/VBox"]
+modulate = Color(0.9, 0.95, 1, 1)
+layout_mode = 2
+text = "⚡ Экономичный двигатель"
+
+[node name="Desc" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/VBox"]
+modulate = Color(0.75, 0.8, 0.85, 0.85)
+layout_mode = 2
+text = "Снижает расход топлива гидравлическим двигателем при ходьбе на 30%."
+
+[node name="ActionHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/VBox"]
+layout_mode = 2
+
+[node name="EngineCostLabel" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/VBox/ActionHBox"]
+modulate = Color(0.95, 0.85, 0.45, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Стоимость: 15 металлолома, 20.0 л топлива"
+
+[node name="EngineButton" type="Button" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/EngineCard/VBox/ActionHBox"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "[Купить]"
+
+[node name="LegsCard" type="PanelContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
+
+[node name="VBox" type="VBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/VBox"]
+modulate = Color(0.9, 0.95, 1, 1)
+layout_mode = 2
+text = "🦵 Усиленные опоры"
+
+[node name="Desc" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/VBox"]
+modulate = Color(0.75, 0.8, 0.85, 0.85)
+layout_mode = 2
+text = "Замедляет механический износ опор на 40% и повышает скорость ходьбы на 15%."
+
+[node name="ActionHBox" type="HBoxContainer" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/VBox"]
+layout_mode = 2
+
+[node name="LegsCostLabel" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/VBox/ActionHBox"]
+modulate = Color(0.95, 0.85, 0.45, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Стоимость: 18 металлолома, 8 припасов"
+
+[node name="LegsButton" type="Button" parent="RootControl/Dimmer/Center/ModalPanel/VBox/UpgradesVBox/LegsCard/VBox/ActionHBox"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "[Купить]"
+
+[node name="HSeparator4" type="HSeparator" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+layout_mode = 2
+
+[node name="Footer" type="Label" parent="RootControl/Dimmer/Center/ModalPanel/VBox"]
+modulate = Color(0.65, 0.65, 0.65, 0.75)
+layout_mode = 2
+text = "[U / Tab / Esc] Закрыть верстак | [R] Быстрый ремонт шасси"
+horizontal_alignment = 1

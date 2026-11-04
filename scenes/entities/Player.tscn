@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8y9playernode01"]
+
+[ext_resource type="Script" path="res://scripts/entities/Player.gd" id="1_player_script"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 7.0
+height = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
+radius = 50.0
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1_player_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="LanternLight" type="PointLight2D" parent="."]
+position = Vector2(8, -18)
+color = Color(1, 0.88, 0.58, 1)
+energy = 1.15
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_interact")
+
+[node name="StepParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 6
+lifetime = 0.5
+one_shot = true
+direction = Vector2(0, -1)
+spread = 45.0
+gravity = Vector2(0, 98)
+initial_velocity_min = 15.0
+initial_velocity_max = 30.0
+color = Color(0.95, 0.98, 1, 0.8)
+
+[node name="BreathParticles" type="CPUParticles2D" parent="."]
+position = Vector2(6, -26)
+emitting = false
+amount = 8
+lifetime = 1.2
+one_shot = true
+direction = Vector2(1, -0.3)
+spread = 20.0
+gravity = Vector2(-8, -12)
+initial_velocity_min = 10.0
+initial_velocity_max = 22.0
+color = Color(0.9, 0.95, 1, 0.4)
