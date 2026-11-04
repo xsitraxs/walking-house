@@ -25,8 +25,17 @@ func _draw() -> void:
 	var view_right: float = 1380.0
 	if cam != null:
 		var cx: float = cam.global_position.x
-		view_left = cx - 740.0
-		view_right = cx + 740.0
+		# Полуширина считается от реального вьюпорта: при окне шире 1280 px
+		# (или зуме игрока 1.15) прежние +-740 px не доставали до краёв, и
+		# справа/слева земля обрывалась прямой вертикальной границей.
+		var half: float = 640.0
+		if get_viewport() != null:
+			half = get_viewport_rect().size.x * 0.5 * cam.zoom.x
+		# Запас в 2 экрана: на скриншоте земля обрывалась на экранной x≈817,
+		# хотя старый код считал, что покрывает +-740 — реальная видимая
+		# область с учётом параллакса и стрейча оказалась шире.
+		view_left = cx - half * 2.0
+		view_right = cx + half * 2.0
 
 	var palette: Dictionary = biome_mgr.get_active_palette() if biome_mgr != null else {}
 	var c_snow_base: Color = palette.get("ground_snow_base", Color(0.92, 0.95, 0.98, 1.0))
