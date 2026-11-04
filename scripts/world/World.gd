@@ -29,6 +29,7 @@ func _ready() -> void:
 	_populate_resource_nodes()
 	_setup_camera()
 	_connect_event_bus()
+	_start_outside_at_ladder()
 
 func _ensure_components() -> void:
 	if house == null:
@@ -114,6 +115,24 @@ func _setup_camera() -> void:
 	camera.target_player = player
 	if house != null:
 		camera.global_position = Vector2(house.global_position.x + 80.0, 360.0)
+
+## Игра начинается снаружи: исследователь стоит у трапа и должен подняться
+## в дом по [E]. Раньше Player спавнился скрытым снаружи, а GameState считал
+## его «внутри» — из-за этого у трапа висела подсказка «Войти в дом», хотя
+## игрок и так уже был в доме. Теперь оба состояния согласованы.
+func _start_outside_at_ladder() -> void:
+	if player == null or house == null:
+		return
+	var gs: Node = _get_game_state()
+	if gs != null and not gs.is_player_outside:
+		# Игра начинается снаружи: игрок стоит у трапа и должен подняться
+		# в дом по [E]. Синхронизируем GameState, иначе он считает игрока
+		# внутри и разрешает «выйти» из дома, в который ещё не входили.
+		gs.is_player_outside = true
+		if gs.has_signal("player_mode_changed"):
+			gs.emit_signal("player_mode_changed", [true])
+	player.spawn_at_house_ladder(house)
+	# GameCamera переключится сама по сигналу player_mode_changed выше.
 
 func _connect_event_bus() -> void:
 	var bus: Node = _get_event_bus()

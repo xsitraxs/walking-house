@@ -215,6 +215,10 @@ func spawn_at_house_ladder(house: Node2D) -> void:
 	facing = 1.0
 	outside_exposure_timer = 0.0
 	is_at_tether_limit = false
+	# Сбрасываем близость трапа: иначе при спавне снаружи was_near уже
+	# равен true и подсказка «[E] Войти в дом» не покажется.
+	can_reenter_house = false
+	current_interactable = null
 	set_player_active(true)
 	
 	# Spawn initial disembark footprints
@@ -446,6 +450,11 @@ func _update_ladder_proximity() -> void:
 			bus.emit_signal("prompt_cleared")
 
 func _on_interaction_area_entered(area: Area2D) -> void:
+	# Area2D-сигналы срабатывают и у неактивного игрока (он просто скрыт).
+	# Без этой проверки скрытый игрок, стоящий у трапа, сразу выдавал
+	# «[E] Войти в дом» на старте, хотя по GameState он уже в доме.
+	if not is_active:
+		return
 	var bus: Node = _get_event_bus()
 	if area.name == "LadderArea" or area.is_in_group("house_ladder"):
 		can_reenter_house = true
@@ -458,6 +467,8 @@ func _on_interaction_area_entered(area: Area2D) -> void:
 			bus.emit_signal("prompt_requested", prompt)
 
 func _on_interaction_area_exited(area: Area2D) -> void:
+	if not is_active:
+		return
 	var bus: Node = _get_event_bus()
 	if area.name == "LadderArea" or area.is_in_group("house_ladder"):
 		can_reenter_house = false
